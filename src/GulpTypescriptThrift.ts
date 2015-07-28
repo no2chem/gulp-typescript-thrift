@@ -14,19 +14,27 @@ var fs : any = Promise.promisifyAll(require('fs'));
 class GulpTypescriptThrift extends stream.Transform {
 
     definitions : GulpTypescriptDefinitionsStream;
+    opts = {
+        generator: "js:ts"
+    };
 
     constructor(opts? : any) {
-        this.definitions = new GulpTypescriptDefinitionsStream();
         super({
             objectMode: true
         });
+        if (opts != undefined)
+        {
+            this.opts = opts;
+        }
+        gutil.log("opts = " + this.opts);
+        this.definitions = new GulpTypescriptDefinitionsStream();
     }
 
     public _transform(chunk : any, encoding : string, callback) : void {
         var mObj : GulpTypescriptThrift = this;
         temp.mkdirAsync('gulpts')
             .then(function(tempDir) {
-                child_process.execAsync(`thrift -out ${tempDir} --gen js:ts ${chunk.path}`)
+                child_process.execAsync(`thrift -out ${tempDir} --gen ${mObj.opts.generator} ${chunk.path}`)
                     .then(function(res) {
                         fs.readdirAsync(tempDir)
                             .then(function(files)

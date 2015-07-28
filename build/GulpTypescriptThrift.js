@@ -17,16 +17,23 @@ var fs = Promise.promisifyAll(require('fs'));
 var GulpTypescriptThrift = (function (_super) {
     __extends(GulpTypescriptThrift, _super);
     function GulpTypescriptThrift(opts) {
-        this.definitions = new GulpTypescriptDefinitionsStream();
         _super.call(this, {
             objectMode: true
         });
+        this.opts = {
+            generator: "js:ts"
+        };
+        if (opts != undefined) {
+            this.opts = opts;
+        }
+        gutil.log("opts = " + this.opts);
+        this.definitions = new GulpTypescriptDefinitionsStream();
     }
     GulpTypescriptThrift.prototype._transform = function (chunk, encoding, callback) {
         var mObj = this;
         temp.mkdirAsync('gulpts')
             .then(function (tempDir) {
-            child_process.execAsync("thrift -out " + tempDir + " --gen js:ts " + chunk.path)
+            child_process.execAsync("thrift -out " + tempDir + " --gen " + mObj.opts.generator + " " + chunk.path)
                 .then(function (res) {
                 fs.readdirAsync(tempDir)
                     .then(function (files) {

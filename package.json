@@ -1,7 +1,11 @@
 {
   "name": "gulp-typescript-thrift",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A gulp plugin for generating typescript files from Apache Thrift IDL",
+  "repository" : {
+        "type" : "git",
+        "url" : "https://github.com/no2chem/gulp-typescript-thrift"
+  },
   "main": "build/GulpTypescriptThrift.js",
   "scripts": {
     "test": "mocha build/test.js"
