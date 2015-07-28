@@ -26,7 +26,6 @@ class GulpTypescriptThrift extends stream.Transform {
         {
             this.opts = opts;
         }
-        gutil.log("opts = " + this.opts);
         this.definitions = new GulpTypescriptDefinitionsStream();
     }
 

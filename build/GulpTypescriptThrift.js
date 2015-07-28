@@ -26,7 +26,6 @@ var GulpTypescriptThrift = (function (_super) {
         if (opts != undefined) {
             this.opts = opts;
         }
-        gutil.log("opts = " + this.opts);
         this.definitions = new GulpTypescriptDefinitionsStream();
     }
     GulpTypescriptThrift.prototype._transform = function (chunk, encoding, callback) {
